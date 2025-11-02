@@ -1,4 +1,12 @@
-﻿# Feedback Workflow System
+##Video Demo
+
+https://github.com/user-attachments/assets/406b0ac1-9f84-438e-acd2-04ed38c771da
+
+## HR side interface
+![HR side](https://github.com/user-attachments/assets/458e0cea-1b07-4fd4-9045-0e816e41fca2)
+
+ 
+ # Feedback Workflow System
 
 ## Overview
 A simple feedback workflow system where HR users can send feedback form links to clients/users, with automated email notifications.
