@@ -5,19 +5,20 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-// ✅ Allowed frontend origin(s)
+// ✅ Allowed frontend origins (both local + deployed)
 const allowedOrigins = [
   process.env.FRONTEND_URL || "http://localhost:3000",
-  "https://hrrequesstandfeebdack.vercel.app" // your deployed frontend
+  "https://hrrequesstandfeebdack.vercel.app", // your frontend (Vercel)
 ];
 
-// ✅ Middleware
+// ✅ CORS configuration
 app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.log("❌ Blocked CORS for:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
@@ -25,18 +26,19 @@ app.use(
   })
 );
 
+// ✅ Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ Routes
 app.use("/api/feedback", feedbackRoutes);
 
-// ✅ Health check route
+// ✅ Health check
 app.get("/health", (req, res) => {
-  res.json({ status: "OK", timestamp: new Date().toISOString() });
+  res.json({ status: "OK", time: new Date().toISOString() });
 });
 
-// ✅ Global error handler
+// ✅ Error handler
 app.use(errorHandler);
 
 module.exports = app;

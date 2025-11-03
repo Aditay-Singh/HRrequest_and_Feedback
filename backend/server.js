@@ -14,12 +14,7 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(
-    `📧 Email service: ${
-      process.env.RESEND_API_KEY ? "Configured" : "Not configured"
-    }`
-  );
-  console.log(
-    `🗄️ Database: ${process.env.MONGODB_URI ? "Connected" : "Not configured"}`
-  );
+  console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL}`);
+  console.log(`📧 Email: ${process.env.RESEND_API_KEY ? "Configured" : "Not configured"}`);
+  console.log(`🗄️ DB: ${process.env.MONGODB_URI ? "Connected" : "Not configured"}`);
 });
