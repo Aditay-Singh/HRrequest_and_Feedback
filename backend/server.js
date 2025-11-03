@@ -2,17 +2,16 @@ require("dotenv").config();
 const app = require("./src/app");
 const connectDB = require("./src/config/database");
 
-const PORT = process.env.PORT || 5000;
-
 // ✅ Connect to MongoDB
 connectDB();
 
-// ✅ Root route (for testing)
+// ✅ Start Express Server
+const PORT = process.env.PORT || 5000;
+
 app.get("/", (req, res) => {
   res.send("✅ HR Feedback & Request backend is running successfully!");
 });
 
-// ✅ Start Express Server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(

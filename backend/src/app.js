@@ -5,12 +5,13 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-// ✅ CORS Configuration
+// ✅ Allowed frontend origin(s)
 const allowedOrigins = [
-  "https://hrrequesstandfeebdack.vercel.app", // ✅ Your deployed frontend
-  "http://localhost:3000"                     // ✅ Local development
+  process.env.FRONTEND_URL || "http://localhost:3000",
+  "https://hrrequesstandfeebdack.vercel.app" // your deployed frontend
 ];
 
+// ✅ Middleware
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -24,19 +25,18 @@ app.use(
   })
 );
 
-// ✅ Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ API Routes
+// ✅ Routes
 app.use("/api/feedback", feedbackRoutes);
 
-// ✅ Health Check Route
+// ✅ Health check route
 app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-// ✅ Global Error Handler
+// ✅ Global error handler
 app.use(errorHandler);
 
 module.exports = app;
