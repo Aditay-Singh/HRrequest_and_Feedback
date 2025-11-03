@@ -5,20 +5,33 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-// ✅ Middleware
+// ✅ CORS Configuration
+const allowedOrigins = [
+  "https://hrrequesstandfeebdack.vercel.app", // ✅ Your deployed frontend
+  "http://localhost:3000"                     // ✅ Local development
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
 
+// ✅ Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ✅ API Routes
 app.use("/api/feedback", feedbackRoutes);
 
-// ✅ Health Check
+// ✅ Health Check Route
 app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
